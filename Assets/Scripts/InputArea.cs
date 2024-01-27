@@ -16,6 +16,7 @@ public class InputArea : MonoBehaviour
     [SerializeField] float lengthOfTimeTextShown = .5f;
 
     SpriteRenderer spriteRenderer;
+    Jester jester;
 
     public Action OnGoodInput;
     public Action OnBadInput;
@@ -23,6 +24,7 @@ public class InputArea : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        jester = FindObjectOfType<Jester>();
     }
 
     private void Update()
@@ -50,6 +52,26 @@ public class InputArea : MonoBehaviour
         Destroy(musicObj);
         timeSinceTextShown = Time.time;
         if (OnGoodInput != null) { OnGoodInput(); }
+        if (codeUsed == KeyCode.LeftArrow)
+        {
+            jester.DanceLeft();
+        }
+        else if(codeUsed == KeyCode.RightArrow)
+        {
+            jester.DanceRight();
+        }
+        else if(codeUsed == KeyCode.UpArrow)
+        {
+            jester.DanceUp();
+        }
+        else if(codeUsed == KeyCode.DownArrow)
+        {
+            jester.DanceDown();
+        }
+        else
+        {
+            Debug.LogWarning("Keycode used that is not defined");
+        }
     }
 
     void ShowBadNote()
@@ -59,6 +81,7 @@ public class InputArea : MonoBehaviour
         statusText.gameObject.SetActive(true);
         timeSinceTextShown = Time.time;
         if (OnBadInput != null) { OnBadInput(); }
+        jester.GetSad();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

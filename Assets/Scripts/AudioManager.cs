@@ -1,26 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
     AudioSource m_AudioSource;
+    [SerializeField] float SongLength = 120;
+    float timeSongStarted;
+    bool songOver = false;
+
+    public Action OnWin;
     void Start()
     {
         m_AudioSource = GetComponent<AudioSource>();
+        timeSongStarted = 0;
+        StartMusic();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Time.timeSinceLevelLoad > SongLength + timeSongStarted && !songOver)
         {
-            StartMusic();
+            songOver = true;
+            if (OnWin != null) { OnWin(); }
         }
     }
 
     void StartMusic()
     {
-        if (!m_AudioSource.isPlaying) { m_AudioSource.Play(); }
+        if (!m_AudioSource.isPlaying) {
+            FindObjectOfType<MusicScroller>().StartMusic();
+            timeSongStarted = Time.timeSinceLevelLoad;
+            m_AudioSource.Play();
+        }
     }
 }

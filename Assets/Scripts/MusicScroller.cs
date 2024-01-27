@@ -13,10 +13,14 @@ public class MusicScroller : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) { moveMusic = true; }
         if (moveMusic)
         {
             transform.Translate(-Vector2.right * Time.deltaTime * beatTempo);
         }
+    }
+
+    public void StartMusic()
+    {
+        moveMusic = true;
     }
 }
