@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class MusicScroller : MonoBehaviour
 {
-    [SerializeField] float beatTempo = 1f;
+    public float beatTempo = 1f;
+    float BeatSpeed;
     bool moveMusic = false;
 
     private void Start()
     {
-        beatTempo = beatTempo / 60f;
+        BeatSpeed = beatTempo / 60f;
     }
     void Update()
     {
         if (moveMusic)
         {
-            transform.Translate(-Vector2.right * Time.deltaTime * beatTempo);
+            transform.Translate(-Vector2.right * Time.deltaTime * BeatSpeed);
         }
     }
 

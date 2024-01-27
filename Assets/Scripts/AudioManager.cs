@@ -14,8 +14,6 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         m_AudioSource = GetComponent<AudioSource>();
-        timeSongStarted = 0;
-        StartMusic();
     }
 
     // Update is called once per frame
@@ -28,7 +26,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    void StartMusic()
+    public void StartMusic()
     {
         if (!m_AudioSource.isPlaying) {
             FindObjectOfType<MusicScroller>().StartMusic();
