@@ -17,8 +17,6 @@ public class Jester : MonoBehaviour
 
     public void Release()
     {
-        Debug.Log("Relase");
-
         animator.SetBool("HoldLeft", false);
         animator.SetBool("HoldRight", false);
         animator.SetBool("HoldUp", false);

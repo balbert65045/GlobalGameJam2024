@@ -11,10 +11,56 @@ public class SceneAnimator : MonoBehaviour
     [SerializeField] AudioSource Waa5;
     [SerializeField] AudioSource LightOn;
     [SerializeField] AudioSource AngryKing;
+    [SerializeField] AudioSource Bang;
+    [SerializeField] AudioSource GameOverSong;
+
 
     [SerializeField] GameObject GameCamera;
     [SerializeField] GameObject KingCamera;
     [SerializeField] GameObject JesterCamera;
+
+    public void GiveKingAGun()
+    {
+        FindObjectOfType<King>().GiveAGun();
+    }
+
+    public void PlayBang()
+    {
+        Bang.Play();
+        StartCoroutine("WaitAndPlayGameOver");
+    }
+
+    IEnumerator WaitAndPlayGameOver()
+    {
+        yield return new WaitForSeconds(1f);
+        GameOverSong.Play();
+    }
+
+    public void Lose()
+    {
+        GetComponent<Animator>().SetTrigger("Lose");
+    }
+
+    public void BeginWin()
+    {
+        GetComponent<Animator>().SetTrigger("Win");
+    }
+
+    public void JumpForJoy()
+    {
+        FindObjectOfType<Jester>().HoldUp();
+        StartCoroutine("WaitAndWin");
+    }
+
+    IEnumerator WaitAndWin()
+    {
+        yield return new WaitForSeconds(1f);
+        Win();
+    }
+    public void Win()
+    {
+        FindObjectOfType<AudioManager>().Win();
+    }
 
     public void PlayAngryKing()
     {

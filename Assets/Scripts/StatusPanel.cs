@@ -9,8 +9,10 @@ public class StatusPanel : MonoBehaviour
     [SerializeField] GameObject LosePanel;
     [SerializeField] GameObject WinPanel;
     [SerializeField] GameObject ScorePanel;
-    [SerializeField] TMP_Text ScoreText;
-    [SerializeField] TMP_Text HighScoreText;
+    [SerializeField] TMP_Text LoseScoreText;
+    [SerializeField] TMP_Text LoseHighScoreText;
+    [SerializeField] TMP_Text WinScoreText;
+    [SerializeField] TMP_Text WinHighScoreText;
     [SerializeField] GameObject StartText;
 
     float StartTextTime = 2f;
@@ -57,7 +59,8 @@ public class StatusPanel : MonoBehaviour
         Time.timeScale = 0;
         WinPanel.SetActive(true);
         AttemptToSaveScore();
-        ShowScores();
+        WinScoreText.text = Mathf.RoundToInt(FindObjectOfType<Score>().score).ToString();
+        WinHighScoreText.text = SaveSystem.LoadPlayer().scorePerLevel[SceneManager.GetActiveScene().buildIndex - 1].ToString();
     }
 
     public void Lose()
@@ -65,15 +68,10 @@ public class StatusPanel : MonoBehaviour
         lost = true;
         LosePanel.SetActive(true);
         AttemptToSaveScore();
-        ShowScores();
+        LoseScoreText.text = Mathf.RoundToInt(FindObjectOfType<Score>().score).ToString();
+        LoseHighScoreText.text = SaveSystem.LoadPlayer().scorePerLevel[SceneManager.GetActiveScene().buildIndex - 1].ToString();
     }
 
-    void ShowScores()
-    {
-        ScorePanel.SetActive(true);
-        ScoreText.text = Mathf.RoundToInt(FindObjectOfType<Score>().score).ToString();
-        HighScoreText.text = SaveSystem.LoadPlayer().scorePerLevel[SceneManager.GetActiveScene().buildIndex - 1].ToString();
-    }
 
     void AttemptToSaveScore()
     {

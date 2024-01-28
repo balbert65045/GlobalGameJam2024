@@ -40,12 +40,15 @@ public class InputArea : MonoBehaviour
         }
     }
 
+    //Possibly because of Camera Confiner
     private void Update()
     {
         if (FindObjectOfType<StatusPanel>().LostOrWon()) { return; }
         if (Input.GetKeyDown(codeUsed))
         {
-            if (musicNoteInside == null && musicHoldNoteInside == null) { ShowBadNote(); }
+            if (musicNoteInside == null && musicHoldNoteInside == null) {
+                ShowBadNote();
+            }
             else { ShowGoodNote(); }
         }
 
@@ -124,7 +127,6 @@ public class InputArea : MonoBehaviour
 
             if (codeUsed == KeyCode.LeftArrow)
             {
-                Debug.Log("Attempting to hold left");
                 jester.HoldLeft();
             }
             else if (codeUsed == KeyCode.RightArrow)

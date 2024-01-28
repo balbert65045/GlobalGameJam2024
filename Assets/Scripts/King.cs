@@ -10,6 +10,11 @@ public class King : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
     }
+
+    public void GiveAGun()
+    {
+        animator.SetTrigger("Gun");
+    }
     public void GetSuperMad()
     {
         animator.SetTrigger("SuperMad");
