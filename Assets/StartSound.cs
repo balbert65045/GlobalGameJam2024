@@ -13,13 +13,17 @@ public class StartSound : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+    }
+
+    public void Begin()
+    {
         audioSource.Play();
         StartCoroutine("WaitAndGo");
     }
 
     IEnumerator WaitAndGo()
     {
-        while(timeing >= 0)
+        while(timeing >= -1)
         {
             if (timeing == 3)
             {
@@ -38,6 +42,10 @@ public class StartSound : MonoBehaviour
                 FindObjectOfType<AudioManager>().StartMusic();
                 FindObjectOfType<StatusPanel>().ShowGo();
                 FindObjectOfType<Jester>().Go();
+            }
+            if (timeing == -1)
+            {
+                FindObjectOfType<StatusPanel>().HideGo();
             }
             timeing--;
             yield return new WaitForSeconds(speedOfBeat);

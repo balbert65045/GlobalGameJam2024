@@ -7,7 +7,7 @@ using System;
 public class StatusBar : MonoBehaviour
 {
     [SerializeField] float incrementToMove = 25f;
-    [SerializeField] Image forground;
+    [SerializeField] GameObject forground;
     [SerializeField] float SuperGoodThreshold = -100f;
     [SerializeField] float GoodThreshold = -200f;
     [SerializeField] float BadThrshold = -350f;
@@ -22,6 +22,7 @@ public class StatusBar : MonoBehaviour
     bool WasHappy = false;
 
     public Action OnLose;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,23 +39,20 @@ public class StatusBar : MonoBehaviour
     void MoveBarDown()
     {
         float yPos = Mathf.Clamp(forground.transform.localPosition.y - incrementToMove, min, max);
-
+        Debug.Log(yPos);
         forground.transform.localPosition = new Vector3(forground.transform.localPosition.x, yPos, transform.localPosition.z);
         if (yPos <= SuperBadThreshold && !WasSuperMad)
         {
             king.GetSuperMad();
             WasSuperMad = true;
-            forground.color = Color.red;
         }
         else if (yPos <= BadThrshold && !WasMad) {
             king.GetMad();
             WasMad = true;
-            forground.color = Color.red;
         }
         else if (yPos < GoodThreshold && WasHappy) {
             WasHappy = false;
             king.GetCalm();
-            forground.color = Color.black;
         }
         else if (yPos < SuperGoodThreshold && WasSuperHappy)
         {
@@ -75,17 +73,14 @@ public class StatusBar : MonoBehaviour
         {
             WasSuperHappy = true;
             king.GetSuperHappy();
-            forground.color = Color.green;
         }
         else if (yPos >= GoodThreshold && !WasHappy) {
             WasHappy = true;
             king.GetHappy();
-            forground.color = Color.green;
         }
         else if (yPos > BadThrshold && WasMad) {
             WasMad = false;
             king.GetCalm();
-            forground.color = Color.black;
         }
         else if ( yPos > SuperBadThreshold && WasSuperMad)
         {

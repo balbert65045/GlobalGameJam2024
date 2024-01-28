@@ -42,6 +42,7 @@ public class InputArea : MonoBehaviour
 
     private void Update()
     {
+        if (FindObjectOfType<StatusPanel>().LostOrWon()) { return; }
         if (Input.GetKeyDown(codeUsed))
         {
             if (musicNoteInside == null && musicHoldNoteInside == null) { ShowBadNote(); }
