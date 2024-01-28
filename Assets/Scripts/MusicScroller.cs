@@ -11,11 +11,9 @@ public class MusicScroller : MonoBehaviour
     private void Start()
     {
         BeatSpeed = beatTempo / 60f;
-        StatusBar status = FindObjectOfType<StatusBar>();
-        status.OnLose += StopMusic;
     }
 
-    void StopMusic()
+    public void StopMusic()
     {
         moveMusic = false;
     }

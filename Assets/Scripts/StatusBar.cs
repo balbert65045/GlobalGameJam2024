@@ -39,7 +39,6 @@ public class StatusBar : MonoBehaviour
     void MoveBarDown()
     {
         float yPos = Mathf.Clamp(forground.transform.localPosition.y - incrementToMove, min, max);
-        Debug.Log(yPos);
         forground.transform.localPosition = new Vector3(forground.transform.localPosition.x, yPos, transform.localPosition.z);
         if (yPos <= SuperBadThreshold && !WasSuperMad)
         {
@@ -61,8 +60,15 @@ public class StatusBar : MonoBehaviour
         }
         if (yPos == min)
         {
-            if (OnLose != null) { OnLose(); }
+            FindObjectOfType<SceneAnimator>().Lose();
+            FindObjectOfType<MusicScroller>().StopMusic();
+            FindObjectOfType<AudioManager>().StopMusic();
         }
+    }
+
+    public void Lose()
+    {
+        if (OnLose != null) { OnLose(); }
     }
 
     void MoveBarUp()
