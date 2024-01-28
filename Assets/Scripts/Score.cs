@@ -9,7 +9,7 @@ public class Score : MonoBehaviour
     [SerializeField] TMP_Text scoreText;
     [SerializeField] TMP_Text streakText;
     [SerializeField] float amountToChangeScoreBy = 50f;
-    float score = 0;
+    public float score = 0;
     int streak = 0;
     float streakMultiplier = 10f;
     void Start()
