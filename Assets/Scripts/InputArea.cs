@@ -8,7 +8,6 @@ using Unity.VisualScripting;
 
 public class InputArea : MonoBehaviour
 {
-    [SerializeField] GameObject HideArea;
     [SerializeField] KeyCode codeUsed;
     [SerializeField] TMP_Text statusText;
     MusicNote musicNoteInside = null;
@@ -58,6 +57,8 @@ public class InputArea : MonoBehaviour
             }
             else if (MusicHoldNoteHolding != null)
             {
+                jester.Release();
+                spriteRenderer.color = Color.white;
                 MusicHoldNoteHolding.MakeAreaGrey();
                 MusicHoldNoteHolding = null;
             }
@@ -65,7 +66,10 @@ public class InputArea : MonoBehaviour
 
         if (timeSinceTextShown + lengthOfTimeTextShown < Time.time)
         {
-            spriteRenderer.color = Color.black;
+            if (MusicHoldNoteHolding == null)
+            {
+                spriteRenderer.color = Color.white;
+            }
             statusText.gameObject.SetActive(false);
         }
     }
@@ -73,22 +77,42 @@ public class InputArea : MonoBehaviour
     void ShowGoodNote()
     {
         spriteRenderer.color = Color.green;
-        statusText.text = "NICE";
+        statusText.text = "great";
         statusText.gameObject.SetActive(true);
         if (musicNoteInside != null)
         {
-            Debug.Log("Destroying obj: " + musicNoteInside.name);
             GameObject musicObj = musicNoteInside.gameObject;
             musicNoteInside = null;
             Destroy(musicObj);
+
+            if (codeUsed == KeyCode.LeftArrow)
+            {
+                jester.DanceLeft();
+            }
+            else if (codeUsed == KeyCode.RightArrow)
+            {
+                jester.DanceRight();
+            }
+            else if (codeUsed == KeyCode.UpArrow)
+            {
+                jester.DanceUp();
+            }
+            else if (codeUsed == KeyCode.DownArrow)
+            {
+                jester.DanceDown();
+            }
+            else
+            {
+                Debug.LogWarning("Keycode used that is not defined");
+            }
         }
-        else if (musicNoteRelease != null)
+        else if (musicNoteRelease != null && MusicHoldNoteHolding != null)
         {
             //End
             GameObject musicObj = MusicHoldNoteHolding.gameObject;
             MusicHoldNoteHolding = null;
             Destroy(musicObj);
-            HideArea.SetActive(false);
+            jester.Release();
         }
         else if (musicHoldNoteInside != null)
         {
@@ -96,37 +120,39 @@ public class InputArea : MonoBehaviour
             MusicHoldNoteHolding = musicHoldNoteInside;
             musicHoldNoteInside.GetComponent<SpriteRenderer>().enabled = false;
             musicHoldNoteInside.MakeAreaGood();
-            HideArea.SetActive(true);
+
+            if (codeUsed == KeyCode.LeftArrow)
+            {
+                Debug.Log("Attempting to hold left");
+                jester.HoldLeft();
+            }
+            else if (codeUsed == KeyCode.RightArrow)
+            {
+                jester.HoldRight();
+            }
+            else if (codeUsed == KeyCode.UpArrow)
+            {
+                jester.HoldUp();
+            }
+            else if (codeUsed == KeyCode.DownArrow)
+            {
+                jester.HoldDown();
+            }
+            else
+            {
+                Debug.LogWarning("Keycode used that is not defined");
+            }
         }
 
         timeSinceTextShown = Time.time;
         if (OnGoodInput != null) { OnGoodInput(); }
-        if (codeUsed == KeyCode.LeftArrow)
-        {
-            jester.DanceLeft();
-        }
-        else if(codeUsed == KeyCode.RightArrow)
-        {
-            jester.DanceRight();
-        }
-        else if(codeUsed == KeyCode.UpArrow)
-        {
-            jester.DanceUp();
-        }
-        else if(codeUsed == KeyCode.DownArrow)
-        {
-            jester.DanceDown();
-        }
-        else
-        {
-            Debug.LogWarning("Keycode used that is not defined");
-        }
+
     }
 
     void ShowBadNote()
     {
         spriteRenderer.color = Color.red;
-        statusText.text = "BOO";
+        statusText.text = "nay";
         statusText.gameObject.SetActive(true);
         timeSinceTextShown = Time.time;
         if (OnBadInput != null) { OnBadInput(); }
@@ -163,15 +189,18 @@ public class InputArea : MonoBehaviour
                 musicHoldNoteInside.MakeAreaGrey();
                 musicHoldNoteInside = null;
                 ShowBadNote();
-                HideArea.SetActive(false);
+            }
+            else
+            {
+                musicHoldNoteInside = null;
             }
         }
         if (collision.GetComponent<MusicNoteRelease>() != null)
         {
             musicNoteRelease = null;
-            HideArea.SetActive(false);
             if (MusicHoldNoteHolding != null)
             {
+                jester.Release();
                 MusicHoldNoteHolding = null;
             }
         }

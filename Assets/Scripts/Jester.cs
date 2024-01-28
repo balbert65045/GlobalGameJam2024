@@ -10,10 +10,42 @@ public class Jester : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         animator.speed = (FindObjectOfType<MusicScroller>().beatTempo / 60f) / 2.5f;
-        //IdleAnimation.
-        //FindObjectOfType<MusicScroller>().BeatSpeed;
-        //animator.anim
+         StatusBar status = FindObjectOfType<StatusBar>();
+        status.OnLose += Die;
 
+    }
+
+    public void Release()
+    {
+        Debug.Log("Relase");
+
+        animator.SetBool("HoldLeft", false);
+        animator.SetBool("HoldRight", false);
+        animator.SetBool("HoldUp", false);
+        animator.SetBool("HoldDown", false);
+    }
+
+    public void HoldLeft()
+    {
+        animator.SetBool("HoldLeft", true);
+    }
+
+    public void HoldRight()
+    {
+        animator.SetBool("HoldRight", true);
+    }
+    public void HoldUp()
+    {
+        animator.SetBool("HoldUp", true);
+    }
+    public void HoldDown()
+    {
+        animator.SetBool("HoldDown", true);
+    }
+
+    void Die()
+    {
+        animator.SetTrigger("Dead");
     }
 
     public void Go()

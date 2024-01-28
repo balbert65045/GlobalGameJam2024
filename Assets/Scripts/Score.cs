@@ -7,6 +7,7 @@ using TMPro;
 public class Score : MonoBehaviour
 {
     [SerializeField] TMP_Text scoreText;
+    [SerializeField] TMP_Text streakText;
     [SerializeField] float amountToChangeScoreBy = 50f;
     float score = 0;
     int streak = 0;
@@ -32,12 +33,19 @@ public class Score : MonoBehaviour
     {
         score += amountToChangeScoreBy + streak*streakMultiplier;
         streak++;
+        streak = Mathf.Clamp(streak, 0, 8);
+        if (streak > 1)
+        {
+            streakText.gameObject.SetActive(true);
+            streakText.text = "x" + streak.ToString();
+        }
         scoreText.text = score.ToString();
     }
 
     void DecreaseScore()
     {
         streak = 0;
+        streakText.gameObject.SetActive(false);
         score -= amountToChangeScoreBy;
         scoreText.text = score.ToString();
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class StatusPanel : MonoBehaviour
@@ -10,6 +11,7 @@ public class StatusPanel : MonoBehaviour
 
     float StartTextTime = 2f;
     bool startTextAvailable = true;
+    bool lost = false;
     void Start()
     {
         StatusBar status = FindObjectOfType<StatusBar>();
@@ -17,10 +19,24 @@ public class StatusPanel : MonoBehaviour
         AudioManager audioManager = FindObjectOfType<AudioManager>();
         audioManager.OnWin += Win;
     }
-
-    public void ShowGo()
+    public void Show3()
     {
         StartText.SetActive(true);
+        StartText.GetComponent<TMP_Text>().text = "3";
+    }
+
+    public void Show2()
+    {
+        StartText.GetComponent<TMP_Text>().text = "2";
+    }
+
+    public void Show1()
+    {
+        StartText.GetComponent<TMP_Text>().text = "1";
+    }
+    public void ShowGo()
+    {
+        StartText.GetComponent<TMP_Text>().text = "go!";
     }
     private void Update()
     {
@@ -39,7 +55,6 @@ public class StatusPanel : MonoBehaviour
 
     public void Lose()
     {
-        Time.timeScale = 0;
         LosePanel.SetActive(true);
     }
 }

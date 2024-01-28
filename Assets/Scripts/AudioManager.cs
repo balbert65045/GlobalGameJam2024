@@ -8,20 +8,28 @@ public class AudioManager : MonoBehaviour
     AudioSource m_AudioSource;
     [SerializeField] float SongLength = 120;
     float timeSongStarted;
-    bool songOver = false;
+    bool stopped = false;
 
     public Action OnWin;
     void Start()
     {
         m_AudioSource = GetComponent<AudioSource>();
+        StatusBar status = FindObjectOfType<StatusBar>();
+        status.OnLose += StopMusic;
+    }
+
+    void StopMusic()
+    {
+        m_AudioSource.Stop();
+        stopped = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeSinceLevelLoad > SongLength + timeSongStarted && !songOver)
+        if (Time.timeSinceLevelLoad > SongLength + timeSongStarted && !stopped)
         {
-            songOver = true;
+            StopMusic();
             if (OnWin != null) { OnWin(); }
         }
     }

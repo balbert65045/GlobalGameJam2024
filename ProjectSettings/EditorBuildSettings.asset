@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScreen.unity
     guid: 9d3c11e348cb49147b430e46707dfe0d
   - enabled: 1
-    path: Assets/Scenes/BensScene.unity
-    guid: ddc4f10f82249d14e8ec5cf6d36bf5cd
+    path: Assets/Scenes/BensTestScene.unity
+    guid: a2dacd2027e063d40b9c4d0a8103eb1c
   m_configObjects: {}

@@ -10,7 +10,10 @@ public class King : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
     }
-
+    public void GetSuperMad()
+    {
+        animator.SetTrigger("SuperMad");
+    }
     public void GetMad()
     {
         animator.SetTrigger("Mad");
@@ -24,5 +27,10 @@ public class King : MonoBehaviour
     public void GetHappy()
     {
         animator.SetTrigger("Happy");
+    }
+
+    public void GetSuperHappy()
+    {
+        animator.SetTrigger("SuperHappy");
     }
 }

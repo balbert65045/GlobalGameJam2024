@@ -5,24 +5,42 @@ using UnityEngine;
 public class StartSound : MonoBehaviour
 {
     AudioSource audioSource;
-    float timeOfClip = 1f;
+    [SerializeField] float speedOfBeat = .05f;
+    float timer = 0;
     bool start = false;
+    int timeing = 3;
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.Play();
+        StartCoroutine("WaitAndGo");
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator WaitAndGo()
     {
-        if (Time.timeSinceLevelLoad > timeOfClip && !start)
+        while(timeing >= 0)
         {
-            start = true;
-            FindObjectOfType<AudioManager>().StartMusic();
-            FindObjectOfType<StatusPanel>().ShowGo();
-            FindObjectOfType<Jester>().Go();
+            if (timeing == 3)
+            {
+                FindObjectOfType<StatusPanel>().Show3();
+            }
+            if (timeing == 2)
+            {
+                FindObjectOfType<StatusPanel>().Show2();
+            }
+            if (timeing == 1)
+            {
+                FindObjectOfType<StatusPanel>().Show1();
+            }
+            if (timeing == 0)
+            {
+                FindObjectOfType<AudioManager>().StartMusic();
+                FindObjectOfType<StatusPanel>().ShowGo();
+                FindObjectOfType<Jester>().Go();
+            }
+            timeing--;
+            yield return new WaitForSeconds(speedOfBeat);
         }
     }
 }

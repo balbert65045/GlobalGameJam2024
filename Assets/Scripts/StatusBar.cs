@@ -8,13 +8,17 @@ public class StatusBar : MonoBehaviour
 {
     [SerializeField] float incrementToMove = 25f;
     [SerializeField] Image forground;
+    [SerializeField] float SuperGoodThreshold = -100f;
     [SerializeField] float GoodThreshold = -200f;
     [SerializeField] float BadThrshold = -350f;
+    [SerializeField] float SuperBadThreshold = -450f;
     [SerializeField] float max = 0;
     [SerializeField] float min = -550;
 
     King king;
     bool WasMad = false;
+    bool WasSuperMad = false;
+    bool WasSuperHappy = false;
     bool WasHappy = false;
 
     public Action OnLose;
@@ -36,7 +40,13 @@ public class StatusBar : MonoBehaviour
         float yPos = Mathf.Clamp(forground.transform.localPosition.y - incrementToMove, min, max);
 
         forground.transform.localPosition = new Vector3(forground.transform.localPosition.x, yPos, transform.localPosition.z);
-        if (yPos <= BadThrshold && !WasMad) {
+        if (yPos <= SuperBadThreshold && !WasSuperMad)
+        {
+            king.GetSuperMad();
+            WasSuperMad = true;
+            forground.color = Color.red;
+        }
+        else if (yPos <= BadThrshold && !WasMad) {
             king.GetMad();
             WasMad = true;
             forground.color = Color.red;
@@ -45,6 +55,11 @@ public class StatusBar : MonoBehaviour
             WasHappy = false;
             king.GetCalm();
             forground.color = Color.black;
+        }
+        else if (yPos < SuperGoodThreshold && WasSuperHappy)
+        {
+            WasSuperHappy = false;
+            king.GetHappy();
         }
         if (yPos == min)
         {
@@ -56,8 +71,13 @@ public class StatusBar : MonoBehaviour
     {
         float yPos = Mathf.Clamp(forground.transform.localPosition.y + incrementToMove, min, max);
         forground.transform.localPosition = new Vector3(forground.transform.localPosition.x, yPos, transform.localPosition.z);
-
-        if (yPos >= GoodThreshold && !WasHappy) {
+        if (yPos >= SuperGoodThreshold && !WasSuperHappy)
+        {
+            WasSuperHappy = true;
+            king.GetSuperHappy();
+            forground.color = Color.green;
+        }
+        else if (yPos >= GoodThreshold && !WasHappy) {
             WasHappy = true;
             king.GetHappy();
             forground.color = Color.green;
@@ -66,6 +86,11 @@ public class StatusBar : MonoBehaviour
             WasMad = false;
             king.GetCalm();
             forground.color = Color.black;
+        }
+        else if ( yPos > SuperBadThreshold && WasSuperMad)
+        {
+            WasSuperMad = false;
+            king.GetMad();
         }
     }
 }
