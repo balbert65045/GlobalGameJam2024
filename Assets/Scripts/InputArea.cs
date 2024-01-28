@@ -10,6 +10,7 @@ public class InputArea : MonoBehaviour
 {
     [SerializeField] KeyCode codeUsed;
     [SerializeField] TMP_Text statusText;
+    [SerializeField] AudioSource BadSound;
     MusicNote musicNoteInside = null;
     MusicHoldNote musicHoldNoteInside = null;
     MusicNoteRelease musicNoteRelease = null;
@@ -82,6 +83,7 @@ public class InputArea : MonoBehaviour
     {
         spriteRenderer.color = Color.green;
         statusText.text = "great";
+        //GoodSound.Play();
         statusText.gameObject.SetActive(true);
         if (musicNoteInside != null)
         {
@@ -154,6 +156,7 @@ public class InputArea : MonoBehaviour
 
     void ShowBadNote()
     {
+        BadSound.Play();
         spriteRenderer.color = Color.red;
         statusText.text = "nay";
         statusText.gameObject.SetActive(true);

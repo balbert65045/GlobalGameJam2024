@@ -12,7 +12,8 @@ public class SceneAnimator : MonoBehaviour
     [SerializeField] AudioSource LightOn;
     [SerializeField] AudioSource AngryKing;
     [SerializeField] AudioSource Bang;
-    [SerializeField] AudioSource GameOverSong;
+    [SerializeField] AudioSource GameOverGoodSong;
+    [SerializeField] AudioSource GameOverSadSong;
 
 
     [SerializeField] GameObject GameCamera;
@@ -33,7 +34,7 @@ public class SceneAnimator : MonoBehaviour
     IEnumerator WaitAndPlayGameOver()
     {
         yield return new WaitForSeconds(1f);
-        GameOverSong.Play();
+        GameOverSadSong.Play();
     }
 
     public void Lose()
