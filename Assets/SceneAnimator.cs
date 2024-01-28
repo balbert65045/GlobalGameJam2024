@@ -49,6 +49,7 @@ public class SceneAnimator : MonoBehaviour
 
     public void JumpForJoy()
     {
+        GameOverGoodSong.Play();
         FindObjectOfType<Jester>().HoldUp();
         StartCoroutine("WaitAndWin");
     }

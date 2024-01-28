@@ -24,6 +24,6 @@ public class LevelManager : MonoBehaviour
 
     public void LoadTutorial()
     {
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene("Instructions");
     }
 }
