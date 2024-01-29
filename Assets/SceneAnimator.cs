@@ -14,6 +14,7 @@ public class SceneAnimator : MonoBehaviour
     [SerializeField] AudioSource Bang;
     [SerializeField] AudioSource GameOverGoodSong;
     [SerializeField] AudioSource GameOverSadSong;
+    [SerializeField] AudioSource KingLaugh;
 
 
     [SerializeField] GameObject GameCamera;
@@ -51,6 +52,7 @@ public class SceneAnimator : MonoBehaviour
     {
         GameOverGoodSong.Play();
         FindObjectOfType<Jester>().HoldUp();
+        KingLaugh.Play();
         StartCoroutine("WaitAndWin");
     }
 

@@ -56,7 +56,6 @@ public class StatusPanel : MonoBehaviour
     public void Win()
     {
         won = true;
-        Time.timeScale = 0;
         WinPanel.SetActive(true);
         AttemptToSaveScore();
         WinScoreText.text = Mathf.RoundToInt(FindObjectOfType<Score>().score).ToString();
